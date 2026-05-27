@@ -96,11 +96,34 @@ select:hover,.btn:hover{border-color:var(--accent)}
 canvas{max-height:230px;width:100%!important}
 
 /* ── MONTH NAV ── */
-.month-nav{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.month-nav{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
 .month-nav h2{font-size:1.1rem;font-weight:700;flex:1}
 .month-pills{display:flex;gap:5px;flex-wrap:wrap}
 .pill{font-family:var(--mono);font-size:.7rem;padding:5px 11px;border:1px solid var(--border);border-radius:20px;cursor:pointer;background:var(--raised);transition:all .2s;white-space:nowrap}
 .pill:hover,.pill.active{background:var(--accent);color:#0a0e1a;border-color:var(--accent);font-weight:700}
+
+/* ── COLLAPSIBLE MONTH LIST ── */
+.month-collapse-wrap{margin-bottom:18px;background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:border-color .2s}
+.month-collapse-wrap:hover{border-color:rgba(255,255,255,.12)}
+.month-collapse-header{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;user-select:none}
+.month-collapse-header:hover{background:var(--raised)}
+.month-collapse-title{display:flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;color:var(--text)}
+.month-collapse-active{font-family:var(--mono);font-size:.72rem;color:var(--accent);background:rgba(0,212,170,.1);border:1px solid rgba(0,212,170,.25);border-radius:20px;padding:2px 10px}
+.month-collapse-arrow{font-size:.7rem;color:var(--muted);transition:transform .25s}
+.month-collapse-arrow.open{transform:rotate(180deg)}
+.month-collapse-body{display:none;padding:10px 14px 14px;border-top:1px solid var(--border)}
+.month-collapse-body.open{display:flex;flex-direction:column;gap:10px}
+.month-collapse-pills{display:flex;gap:5px;flex-wrap:wrap}
+.month-collapse-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── GUARDAR DINHEIRO ── */
+.guardar-row{display:flex;align-items:center;gap:8px;padding:8px 14px 10px;border-top:1px solid var(--border);background:rgba(255,209,102,.03)}
+.guardar-label{display:flex;align-items:center;gap:5px;font-size:.68rem;font-weight:600;color:var(--accent3);text-transform:uppercase;letter-spacing:.08em;white-space:nowrap}
+.guardar-input{font-family:var(--mono);font-size:.82rem;background:var(--raised);border:1px solid rgba(255,209,102,.35);border-radius:7px;color:var(--accent3);padding:5px 9px;width:110px;outline:none;transition:border-color .2s}
+.guardar-input:focus{border-color:var(--accent3)}
+.guardar-val{font-family:var(--mono);font-size:.82rem;color:var(--accent3);cursor:pointer;border-bottom:1px dashed rgba(255,209,102,.35);padding-bottom:1px}
+.guardar-val:hover{border-color:var(--accent3)}
+.guardar-badge{font-size:.7rem;font-family:var(--mono);color:var(--muted);margin-left:auto}
 
 /* ── QUINZENA ── */
 .quinzena-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
@@ -177,6 +200,30 @@ tr:hover td{background:var(--raised)}
 .bar-bg{background:var(--raised);border-radius:4px;height:6px;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width .5s cubic-bezier(.4,0,.2,1)}
 
+/* ── BANK FILTER ── */
+.bank-filter-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.bank-filter-bar label{font-size:.72rem;color:var(--muted)}
+.bank-pill{font-size:.7rem;padding:4px 11px;border:1px solid var(--border);border-radius:20px;cursor:pointer;background:var(--raised);transition:all .2s;font-weight:500}
+.bank-pill:hover{border-color:rgba(255,255,255,.2)}
+.bank-pill.all.on{background:var(--accent);color:#0a0e1a;border-color:var(--accent)}
+.bank-pill.itau.on{background:var(--itau);color:#fff;border-color:var(--itau)}
+.bank-pill.inter.on{background:var(--inter);color:#fff;border-color:var(--inter)}
+.bank-pill.nubank.on{background:var(--nubank);color:#fff;border-color:var(--nubank)}
+.bank-filter-total{font-family:var(--mono);font-size:.72rem;color:var(--muted);margin-left:auto}
+
+/* ── PAID CHECK ── */
+.exp-check{width:16px;height:16px;border-radius:4px;border:1.5px solid var(--border);cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .15s;background:transparent}
+.exp-check.paid{background:var(--accent);border-color:var(--accent)}
+.exp-check.paid::after{content:'✓';font-size:.6rem;color:#0a0e1a;font-weight:700}
+.exp-row.paid-row{opacity:.55}
+.exp-row.paid-row .exp-name{text-decoration:line-through;color:var(--muted)}
+
+/* ── EYE TOGGLE ── */
+.eye-btn{background:none;border:none;cursor:pointer;font-size:1rem;padding:4px 6px;color:var(--muted);transition:color .2s;line-height:1}
+.eye-btn:hover{color:var(--text)}
+.val-hidden{filter:blur(5px);user-select:none;transition:filter .2s}
+.val-hidden:hover{filter:blur(5px)}
+
 /* ── MODALS ── */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;padding:16px}
 .overlay.open{opacity:1;pointer-events:all}
@@ -243,7 +290,6 @@ tr:hover td{background:var(--raised)}
   </div>
   <div class="header-actions">
     <button class="btn btn-blue" onclick="openShare()">🔗 Compartilhar</button>
-    <button class="btn btn-accent" onclick="openNewMonth()">+ Novo Mês</button>
     <button class="btn" onclick="logout()" title="Sair" style="padding:7px 10px">🔒</button>
   </div>
 </header>
@@ -263,10 +309,24 @@ tr:hover td{background:var(--raised)}
   </div>
 
   <!-- KPIs — month only -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+    <span style="font-size:.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em">Resumo do Mês</span>
+    <button class="eye-btn" id="eyeToggle" onclick="toggleValVis()" title="Mostrar/ocultar valores">👁</button>
+  </div>
   <div class="kpi-bar" id="kpiBar"></div>
 
   <!-- Bank totals -->
   <div class="bank-bar" id="bankBar"></div>
+
+  <!-- Bank filter -->
+  <div class="bank-filter-bar" id="bankFilterBar">
+    <span style="font-size:.72rem;color:var(--muted)">Filtrar por banco:</span>
+    <div class="bank-pill all on" id="bfAll" onclick="setBankFilter('')">Todos</div>
+    <div class="bank-pill itau" id="bfItau" onclick="setBankFilter('Itau')">Itaú</div>
+    <div class="bank-pill inter" id="bfInter" onclick="setBankFilter('Inter')">Inter</div>
+    <div class="bank-pill nubank" id="bfNubank" onclick="setBankFilter('Nubank')">Nubank</div>
+    <span class="bank-filter-total" id="bankFilterTotal"></span>
+  </div>
 
   <!-- Charts -->
   <div class="grid-2">
@@ -274,12 +334,21 @@ tr:hover td{background:var(--raised)}
     <div class="card"><div class="card-title"><span>📈</span>Evolução do Saldo</div><canvas id="lineChart"></canvas></div>
   </div>
 
-  <!-- Month nav -->
-  <div class="month-nav">
-    <h2 id="monthTitle">—</h2>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-      <div class="month-pills" id="monthPills"></div>
-      <button class="btn btn-danger" onclick="confirmDeleteMonth()" style="font-size:.72rem;padding:5px 11px">🗑 Excluir mês</button>
+  <!-- Month nav — collapsible -->
+  <div class="month-collapse-wrap" id="monthCollapseWrap">
+    <div class="month-collapse-header" onclick="toggleMonthCollapse()">
+      <div class="month-collapse-title">
+        📅 <span>Meses</span>
+        <span class="month-collapse-active" id="monthTitle">—</span>
+      </div>
+      <span class="month-collapse-arrow" id="monthCollapseArrow">▼</span>
+    </div>
+    <div class="month-collapse-body" id="monthCollapseBody">
+      <div class="month-collapse-pills" id="monthPills"></div>
+      <div class="month-collapse-actions">
+        <button class="btn btn-accent" onclick="openNewMonth()">+ Novo Mês</button>
+        <button class="btn btn-danger" onclick="confirmDeleteMonth()" style="font-size:.72rem;padding:5px 11px">🗑 Excluir mês</button>
+      </div>
     </div>
   </div>
 
@@ -341,7 +410,10 @@ tr:hover td{background:var(--raised)}
     <h3>🔗 Compartilhar / Celular</h3>
     <p style="font-size:.78rem;color:var(--muted);line-height:1.6">Seus dados ficam no link. Abra no celular ou salve nos favoritos.</p>
     <div class="share-box">
-      <div style="font-size:.72rem;color:var(--muted)">Link com seus dados:</div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:.72rem;color:var(--muted)">Link com seus dados:</span>
+        <span id="shareSizeInfo" style="font-size:.68rem;color:var(--accent);font-family:var(--mono)"></span>
+      </div>
       <div class="share-url" id="shareUrl">Gerando…</div>
       <div class="share-btns">
         <button class="btn btn-accent" onclick="copyShareLink()">📋 Copiar Link</button>
@@ -418,70 +490,24 @@ if(sessionStorage.getItem('fin_auth')==='1'){
 }
 
 // ══ DATA ════════════════════════════════════════════════════════════════════
-const INITIAL=[
-  {id:"OUT-2024",label:"Out/2024",year:"2024",vale:1139.15,pg:1401.64,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:61.5,p:0,dest:"Nubank"},{n:"BRAS",v:200,p:0,dest:""},{n:"NUBANK",v:107.02,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:50,p:0,dest:"Itau"}],
-   d30:[{n:"BARBERO",v:97.9,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"DESKTOP",v:75,p:0,dest:"Nubank"},{n:"ACADEMIA",v:55.9,p:0,dest:"Itau"},{n:"COMBUSTIVEL",v:420,p:0,dest:"Itau"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:36,p:0,dest:"Itau"}]},
-  {id:"NOV-2024",label:"Nov/2024",year:"2024",vale:1139.15,pg:1401.64,extra:593,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"NUBANK",v:144.99,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"}],
-   d30:[{n:"BARBERO",v:90,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"ACADEMIA",v:55.9,p:0,dest:"Itau"},{n:"CELULAR",v:289.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:350,p:0,dest:"Itau"},{n:"RELÓGIO",v:100,p:3,dest:"Nubank"}]},
-  {id:"DEZ-2024",label:"Dez/2024",year:"2024",vale:1139.15,pg:1401.64,extra:300,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:450,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"TECLADO",v:48.58,p:2,dest:"Nubank"},{n:"RELÓGIO",v:100,p:0,dest:""},{n:"SSD",v:50.74,p:0,dest:"Nubank"},{n:"NETFLIX",v:12.9,p:0,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:90,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"ACADEMIA",v:55.9,p:0,dest:"Itau"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:250,p:0,dest:"Itau"}]},
-  {id:"JAN-2025",label:"Jan/2025",year:"2025",vale:1139.15,pg:1401.64,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:350,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:12.9,p:0,dest:"Nubank"},{n:"TENIS",v:87.57,p:3,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:90,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"ACADEMIA",v:55.9,p:0,dest:"Itau"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:250,p:0,dest:"Itau"}]},
-  {id:"FEV-2025",label:"Fev/2025",year:"2025",vale:1139.15,pg:1401.06,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:350,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:12.9,p:0,dest:"Nubank"},{n:"MONITOR",v:96.75,p:6,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:90,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:350,p:0,dest:"Itau"},{n:"DESKTOP",v:75,p:0,dest:"Nubank"},{n:"MARCOS",v:200,p:0,dest:"Inter"}]},
-  {id:"MAR-2025",label:"Mar/2025",year:"2025",vale:1139.15,pg:1342.64,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:390,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:12.9,p:0,dest:"Nubank"},{n:"MONITOR",v:96.75,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:350,p:0,dest:"Itau"},{n:"DESKTOP",v:75,p:0,dest:"Nubank"}]},
-  {id:"ABR-2025",label:"Abr/2025",year:"2025",vale:1139.15,pg:1342.64,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:390,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:12.9,p:0,dest:"Nubank"},{n:"MONITOR",v:96.75,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"}],
-   d30:[{n:"BARBERO",v:50,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:460,p:0,dest:"Itau"},{n:"CARRO",v:160,p:0,dest:"Itau"},{n:"DESKTOP",v:75,p:0,dest:"Nubank"},{n:"ALUGUEL CARRO",v:190,p:0,dest:"Inter"}]},
-  {id:"MAI-2025",label:"Mai/2025",year:"2025",vale:1139.15,pg:1342.64,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:350,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:12.9,p:0,dest:"Nubank"},{n:"MONITOR",v:96.75,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:350,p:0,dest:"Itau"},{n:"DESKTOP",v:75,p:0,dest:"Nubank"},{n:"MARCOS",v:200,p:0,dest:"Inter"}]},
-  {id:"JUN-2025",label:"Jun/2025",year:"2025",vale:1139.15,pg:1367.29,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:390,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:12.9,p:0,dest:"Nubank"},{n:"MONITOR",v:96.75,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"},{n:"OCULOS",v:96.66,p:3,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:100,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:250,p:0,dest:"Itau"}]},
-  {id:"JUL-2025",label:"Jul/2025",year:"2025",vale:1207.5,pg:1311.64,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:400,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"MONITOR",v:96.75,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"},{n:"TÊNIS",v:137.49,p:3,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"VIVO",v:100,p:0,dest:"Inter"}]},
-  {id:"AGO-2025",label:"Ago/2025",year:"2025",vale:1139.15,pg:1941,extra:0,
-   d15:[{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"},{n:"TÊNIS",v:137.49,p:0,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:470,p:0,dest:"Itau"},{n:"CARRO",v:500,p:0,dest:"Itau"},{n:"VIVO",v:100,p:0,dest:"Inter"}]},
-  {id:"SET-2025",label:"Set/2025",year:"2025",vale:1207.5,pg:1450,extra:0,
-   d15:[{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"},{n:"TV BOX",v:30,p:0,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:50,p:0,dest:"Inter"},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"COMBUSTIVEL",v:450,p:0,dest:"Itau"},{n:"CARRO",v:400,p:0,dest:"Itau"},{n:"VIVO",v:100,p:0,dest:"Inter"},{n:"FONE",v:107.43,p:3,dest:"Nubank"}]},
-  {id:"OUT-2025",label:"Out/2025",year:"2025",vale:1207.5,pg:1425,extra:0,
-   d15:[{n:"SEGURO",v:92,p:0,dest:""},{n:"CELULAR",v:186.5,p:0,dest:"Nubank"},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"GAMEPASS",v:35,p:0,dest:"Itau"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"},{n:"TV BOX",v:30,p:0,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:55.34,p:0,dest:"Inter"},{n:"COMBUSTIVEL",v:450,p:0,dest:"Itau"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"VIVO",v:100,p:0,dest:"Inter"}]},
-  {id:"NOV-2025",label:"Nov/2025",year:"2025",vale:1207.5,pg:1425,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"},{n:"TV BOX",v:30,p:0,dest:"Nubank"},{n:"FONE",v:107.43,p:0,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:55.34,p:0,dest:"Inter"},{n:"COMBUSTIVEL",v:450,p:0,dest:"Itau"},{n:"CARRO",v:300,p:0,dest:"Itau"},{n:"VIVO",v:100,p:0,dest:"Inter"}]},
-  {id:"DEZ-2025",label:"Dez/2025",year:"2025",vale:1207.5,pg:1425,extra:0,
-   d15:[{n:"SEGURO",v:95,p:0,dest:""},{n:"GOOGLE ONE",v:7.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:11.9,p:0,dest:"Nubank"},{n:"CARRO",v:400,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"MAE",v:60,p:0,dest:"Inter"},{n:"TV BOX",v:30,p:0,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:55.34,p:0,dest:"Inter"},{n:"COMBUSTIVEL",v:450,p:0,dest:"Itau"},{n:"CARRO",v:400,p:0,dest:"Itau"},{n:"VIVO",v:100,p:0,dest:"Inter"},{n:"FONE",v:107.43,p:0,dest:"Nubank"}]},
-  {id:"JAN-2026",label:"Jan/2026",year:"2026",vale:1207.5,pg:1425,extra:0,
-   d15:[{n:"SEGURO",v:110,p:0,dest:""},{n:"GOOGLE ONE",v:9.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:12.9,p:0,dest:"Nubank"},{n:"CARRO",v:453,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"TV BOX",v:30,p:0,dest:"Nubank"},{n:"KIMONO",v:45,p:3,dest:"Nubank"},{n:"IPVA",v:219.55,p:5,dest:"Itau"},{n:"AR CONDI",v:143.53,p:4,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:55.34,p:0,dest:"Inter"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:400,p:0,dest:"Itau"},{n:"VIVO",v:110,p:0,dest:"Inter"},{n:"IPVA",v:109.8,p:0,dest:"Itau"},{n:"SEGURO VIDA",v:39.9,p:0,dest:"Inter"}]},
-  {id:"FEV-2026",label:"Fev/2026",year:"2026",vale:1207.5,pg:1431,extra:0,
-   d15:[{n:"SEGURO",v:110,p:0,dest:""},{n:"GOOGLE ONE",v:9.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:12.9,p:0,dest:"Nubank"},{n:"CARRO",v:453,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"TV BOX",v:30,p:0,dest:"Nubank"},{n:"KIMONO",v:45,p:0,dest:"Nubank"},{n:"IPVA",v:109.8,p:0,dest:"Itau"},{n:"AR CONDI",v:143.53,p:0,dest:"Nubank"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:55.34,p:0,dest:"Inter"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:400,p:0,dest:"Itau"},{n:"VIVO",v:110,p:0,dest:"Inter"},{n:"IPVA",v:109.8,p:0,dest:"Itau"},{n:"SEGURO VIDA",v:39.9,p:0,dest:"Inter"}]},
-  {id:"MAR-2026",label:"Mar/2026",year:"2026",vale:1207.5,pg:1431,extra:0,
-   d15:[{n:"SEGURO",v:110,p:0,dest:""},{n:"GOOGLE ONE",v:9.99,p:0,dest:"Nubank"},{n:"SPOTIFY",v:12.9,p:0,dest:"Nubank"},{n:"CARRO",v:453,p:0,dest:"Itau"},{n:"ICLOUD",v:5,p:0,dest:"Nubank"},{n:"NETFLIX",v:25.8,p:0,dest:"Nubank"},{n:"TV BOX",v:30,p:0,dest:"Nubank"},{n:"KIMONO",v:45,p:0,dest:"Nubank"},{n:"IPVA",v:109.8,p:0,dest:"Itau"},{n:"AR CONDI",v:143.53,p:0,dest:"Nubank"},{n:"AGIOTA",v:100,p:0,dest:"Inter"}],
-   d30:[{n:"BARBERO",v:100,p:0,dest:""},{n:"CLARO",v:55.34,p:0,dest:"Inter"},{n:"COMBUSTIVEL",v:440,p:0,dest:"Itau"},{n:"CARRO",v:400,p:0,dest:"Itau"},{n:"SEGURO VIDA",v:39.9,p:0,dest:"Inter"},{n:"IPVA",v:109.8,p:0,dest:"Itau"},{n:"MULTIMIDIA",v:86.5,p:3,dest:"Nubank"}]},
-];
+const INITIAL=[{"id":"OUT-2024","label":"Out/2024","year":"2024","vale":1139.15,"pg":1401.64,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":61.5,"p":0,"dest":"Nubank"},{"n":"BRAS","v":200,"p":0,"dest":""},{"n":"NUBANK","v":107.02,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":50,"p":0,"dest":"Itau"}],"d30":[{"n":"BARBERO","v":97.9,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"DESKTOP","v":75,"p":0,"dest":"Nubank"},{"n":"ACADEMIA","v":55.9,"p":0,"dest":"Itau"},{"n":"COMBUSTIVEL","v":420,"p":0,"dest":"Itau"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":36,"p":0,"dest":"Itau"}]},{"id":"NOV-2024","label":"Nov/2024","year":"2024","vale":1139.15,"pg":1401.64,"extra":593,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"NUBANK","v":144.99,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"}],"d30":[{"n":"BARBERO","v":90,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"ACADEMIA","v":55.9,"p":0,"dest":"Itau"},{"n":"CELULAR","v":289.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":350,"p":0,"dest":"Itau"},{"n":"RELOGIO","v":100,"p":3,"dest":"Nubank"}]},{"id":"DEZ-2024","label":"Dez/2024","year":"2024","vale":1139.15,"pg":1401.64,"extra":300,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":450,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"TECLADO","v":48.58,"p":2,"dest":"Nubank"},{"n":"RELOGIO","v":100,"p":0,"dest":""},{"n":"SSD","v":50.74,"p":0,"dest":"Nubank"},{"n":"NETFLIX","v":12.9,"p":0,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":90,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"ACADEMIA","v":55.9,"p":0,"dest":"Itau"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":250,"p":0,"dest":"Itau"}]},{"id":"JAN-2025","label":"Jan/2025","year":"2025","vale":1139.15,"pg":1401.64,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":350,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":12.9,"p":0,"dest":"Nubank"},{"n":"TENIS","v":87.57,"p":3,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":90,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"ACADEMIA","v":55.9,"p":0,"dest":"Itau"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":250,"p":0,"dest":"Itau"}]},{"id":"FEV-2025","label":"Fev/2025","year":"2025","vale":1139.15,"pg":1401.06,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":350,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":12.9,"p":0,"dest":"Nubank"},{"n":"MONITOR","v":96.75,"p":6,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":90,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":350,"p":0,"dest":"Itau"},{"n":"DESKTOP","v":75,"p":0,"dest":"Nubank"},{"n":"MARCOS","v":200,"p":0,"dest":"Inter"}]},{"id":"MAR-2025","label":"Mar/2025","year":"2025","vale":1139.15,"pg":1342.64,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":390,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":12.9,"p":0,"dest":"Nubank"},{"n":"MONITOR","v":96.75,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":350,"p":0,"dest":"Itau"},{"n":"DESKTOP","v":75,"p":0,"dest":"Nubank"}]},{"id":"ABR-2025","label":"Abr/2025","year":"2025","vale":1139.15,"pg":1342.64,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":390,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":12.9,"p":0,"dest":"Nubank"},{"n":"MONITOR","v":96.75,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"}],"d30":[{"n":"BARBERO","v":50,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":460,"p":0,"dest":"Itau"},{"n":"CARRO","v":160,"p":0,"dest":"Itau"},{"n":"DESKTOP","v":75,"p":0,"dest":"Nubank"},{"n":"ALUGUEL CARRO","v":190,"p":0,"dest":"Inter"}]},{"id":"MAI-2025","label":"Mai/2025","year":"2025","vale":1139.15,"pg":1342.64,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":350,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":12.9,"p":0,"dest":"Nubank"},{"n":"MONITOR","v":96.75,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":350,"p":0,"dest":"Itau"},{"n":"DESKTOP","v":75,"p":0,"dest":"Nubank"},{"n":"MARCOS","v":200,"p":0,"dest":"Inter"}]},{"id":"JUN-2025","label":"Jun/2025","year":"2025","vale":1139.15,"pg":1367.29,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":390,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":12.9,"p":0,"dest":"Nubank"},{"n":"MONITOR","v":96.75,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"},{"n":"OCULOS","v":96.66,"p":3,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":100,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":250,"p":0,"dest":"Itau"}]},{"id":"JUL-2025","label":"Jul/2025","year":"2025","vale":1207.5,"pg":1311.64,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":400,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"MONITOR","v":96.75,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"},{"n":"TENIS","v":137.49,"p":3,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"VIVO","v":100,"p":0,"dest":"Inter"}]},{"id":"AGO-2025","label":"Ago/2025","year":"2025","vale":1139.15,"pg":1941,"extra":0,"d15":[{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"},{"n":"TENIS","v":137.49,"p":0,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":470,"p":0,"dest":"Itau"},{"n":"CARRO","v":500,"p":0,"dest":"Itau"},{"n":"VIVO","v":100,"p":0,"dest":"Inter"}]},{"id":"SET-2025","label":"Set/2025","year":"2025","vale":1207.5,"pg":1450,"extra":0,"d15":[{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":50,"p":0,"dest":"Inter"},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"COMBUSTIVEL","v":450,"p":0,"dest":"Itau"},{"n":"CARRO","v":400,"p":0,"dest":"Itau"},{"n":"VIVO","v":100,"p":0,"dest":"Inter"},{"n":"FONE","v":107.43,"p":3,"dest":"Nubank"}]},{"id":"OUT-2025","label":"Out/2025","year":"2025","vale":1207.5,"pg":1425,"extra":0,"d15":[{"n":"SEGURO","v":92,"p":0,"dest":""},{"n":"CELULAR","v":186.5,"p":0,"dest":"Nubank"},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"GAMEPASS","v":35,"p":0,"dest":"Itau"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":55.34,"p":0,"dest":"Inter"},{"n":"COMBUSTIVEL","v":450,"p":0,"dest":"Itau"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"VIVO","v":100,"p":0,"dest":"Inter"}]},{"id":"NOV-2025","label":"Nov/2025","year":"2025","vale":1207.5,"pg":1425,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank"},{"n":"FONE","v":107.43,"p":0,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":55.34,"p":0,"dest":"Inter"},{"n":"COMBUSTIVEL","v":450,"p":0,"dest":"Itau"},{"n":"CARRO","v":300,"p":0,"dest":"Itau"},{"n":"VIVO","v":100,"p":0,"dest":"Inter"}]},{"id":"DEZ-2025","label":"Dez/2025","year":"2025","vale":1207.5,"pg":1425,"extra":0,"d15":[{"n":"SEGURO","v":95,"p":0,"dest":""},{"n":"GOOGLE ONE","v":7.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":11.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":400,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"MAE","v":60,"p":0,"dest":"Inter"},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":55.34,"p":0,"dest":"Inter"},{"n":"COMBUSTIVEL","v":450,"p":0,"dest":"Itau"},{"n":"CARRO","v":400,"p":0,"dest":"Itau"},{"n":"VIVO","v":100,"p":0,"dest":"Inter"},{"n":"FONE","v":107.43,"p":0,"dest":"Nubank"}]},{"id":"JAN-2026","label":"Jan/2026","year":"2026","vale":1207.5,"pg":1425,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":0,"dest":""},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":453,"p":0,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank"},{"n":"KIMONO","v":45,"p":3,"dest":"Nubank"},{"n":"IPVA","v":219.55,"p":5,"dest":"Itau"},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank"}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":55.34,"p":0,"dest":"Inter"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":400,"p":0,"dest":"Itau"},{"n":"VIVO","v":110,"p":0,"dest":"Inter"},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau"},{"n":"SEGURO VIDA","v":39.9,"p":0,"dest":"Inter"}]},{"id":"FEV-2026","label":"Fev/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":0,"dest":""},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank"},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank"},{"n":"CARRO","v":453,"p":48,"dest":"Itau"},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank"},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank"},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank"},{"n":"KIMONO","v":45,"p":0,"dest":"Nubank"},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau"},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":1,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":55.34,"p":0,"dest":"Inter"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"CARRO","v":400,"p":48,"dest":"Itau"},{"n":"VIVO","v":110,"p":0,"dest":"Inter"},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau"},{"n":"SEGURO VIDA","v":39.9,"p":0,"dest":"Inter"}]},{"id":"MAR-2026","label":"Mar/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":0,"dest":"","paid":true},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":true},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":true},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":true},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":true},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":true},{"n":"KIMONO","v":45,"p":0,"dest":"Nubank","paid":true},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau","paid":true},{"n":"AGIOTA","v":100,"p":0,"dest":"Inter","paid":true},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":1,"paid":true},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":2,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":""},{"n":"CLARO","v":55.34,"p":0,"dest":"Inter"},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Itau"},{"n":"SEGURO VIDA","v":39.9,"p":0,"dest":"Inter"},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau"},{"n":"MULTIMIDIA","v":86.5,"p":3,"dest":"Nubank"},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":1,"paid":false}]},{"id":"ABR-2026","label":"Abr/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":7,"dest":"Itau"},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"KIMONO","v":45,"p":1,"dest":"Nubank","paid":false},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau","paid":false},{"n":"AGIOTA","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"MULTIMIDIA","v":86.5,"p":1,"dest":"Nubank"},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":2,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":3,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":true},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":true},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":true},{"n":"SEGURO","v":39.9,"p":7,"dest":"Itau","paid":true},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau","paid":true},{"n":"MULTIMIDIA","v":86.5,"p":1,"dest":"Nubank","paid":true},{"n":"KIMONO","v":45,"p":0,"dest":"Nubank","paid":true},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":2,"paid":true}]},{"id":"MAI-2026","label":"Mai/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":7,"dest":"Itau","pPaid":1,"paid":false},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau","paid":false},{"n":"MULTIMIDIA","v":86.5,"p":0,"dest":"Nubank","pPaid":0,"paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":3,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":4,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"SEGURO","v":39.9,"p":7,"dest":"Itau","paid":false,"pPaid":1},{"n":"IPVA","v":109.8,"p":0,"dest":"Itau","paid":false},{"n":"MULTIMIDIA","v":86.5,"p":0,"dest":"Nubank","pPaid":0,"paid":false},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":3,"paid":false}]},{"id":"JUN-2026","label":"Jun/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":7,"dest":"Itau","pPaid":2,"paid":false},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":4,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":5,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"SEGURO","v":39.9,"p":7,"dest":"Itau","paid":false,"pPaid":2},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":4,"paid":false}]},{"id":"JUL-2026","label":"Jul/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":7,"dest":"Itau","pPaid":3,"paid":false},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":5,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":6,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"SEGURO","v":39.9,"p":7,"dest":"Itau","paid":false,"pPaid":3},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":5,"paid":false}]},{"id":"AGO-2026","label":"Ago/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":7,"dest":"Itau","pPaid":4,"paid":false},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":6,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":7,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"SEGURO","v":39.9,"p":7,"dest":"Itau","paid":false,"pPaid":4},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":6,"paid":false}]},{"id":"SET-2026","label":"Set/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":7,"dest":"Itau","pPaid":5,"paid":false},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":7,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":8,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"SEGURO","v":39.9,"p":7,"dest":"Itau","paid":false,"pPaid":5},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":7,"paid":false}]},{"id":"OUT-2026","label":"Out/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":7,"dest":"Itau","pPaid":6,"paid":false},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":8,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":9,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"SEGURO","v":39.9,"p":7,"dest":"Itau","paid":false,"pPaid":6},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":8,"paid":false}]},{"id":"NOV-2026","label":"Nov/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"SEGURO","v":110,"p":0,"dest":"Itau","pPaid":0,"paid":false},{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":9,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":10,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"SEGURO","v":39.9,"p":0,"dest":"Itau","paid":false,"pPaid":0},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":9,"paid":false}]},{"id":"DEZ-2026","label":"Dez/2026","year":"2026","vale":1207.5,"pg":1431,"extra":0,"d15":[{"n":"GOOGLE ONE","v":9.99,"p":0,"dest":"Nubank","paid":false},{"n":"SPOTIFY","v":12.9,"p":0,"dest":"Nubank","paid":false},{"n":"ICLOUD","v":5,"p":0,"dest":"Nubank","paid":false},{"n":"NETFLIX","v":25.8,"p":0,"dest":"Nubank","paid":false},{"n":"TV BOX","v":30,"p":0,"dest":"Nubank","paid":false},{"n":"CARRO","v":453,"p":48,"dest":"Itau","pPaid":10,"paid":false},{"n":"AR CONDI","v":143.53,"p":12,"dest":"Nubank","pPaid":11,"paid":false}],"d30":[{"n":"BARBERO","v":100,"p":0,"dest":"Nubank","paid":false},{"n":"CLARO","v":55.34,"p":0,"dest":"Nubank","paid":false},{"n":"COMBUSTIVEL","v":440,"p":0,"dest":"Inter","paid":false},{"n":"CARRO","v":400,"p":48,"dest":"Itau","pPaid":10,"paid":false}]}];
 
 // ══ STATE ════════════════════════════════════════════════════════════════════
 let data=[], activeYear='2026', activeMonth='MAR-2026';
 let yearFilterOn=false, filteredYears=new Set();
 let barChart, lineChart;
+let bankFilter=''; // '', 'Itau', 'Inter', 'Nubank'
+let valVisible=true;
 
 function loadData(){
-  try{const h=location.hash.slice(1);if(h.startsWith('data=')){const d=JSON.parse(atob(h.slice(5)));if(Array.isArray(d)&&d.length)return d;}}catch(e){}
+  try{
+    const h=location.hash.slice(1);
+    if(h.startsWith('data=')){
+      const raw=h.slice(5);
+      // async decompress — return promise, init() will handle it
+      return '__async__'+raw;
+    }
+  }catch(e){}
   try{const s=localStorage.getItem('findata_v4');if(s)return JSON.parse(s);}catch(e){}
   return JSON.parse(JSON.stringify(INITIAL));
 }
@@ -492,21 +518,75 @@ const pct=v=>(v*100).toFixed(1)+'%';
 const sumK=arr=>arr.reduce((a,b)=>a+b.v,0);
 const tExp=m=>sumK(m.d15)+sumK(m.d30);
 const tRec=m=>m.vale+m.pg+(m.extra||0);
-const saldo=m=>tRec(m)-tExp(m);
+const saldo=m=>tRec(m)-tExp(m)-(m.save15||0)-(m.save30||0);
 const years=()=>[...new Set(data.map(d=>d.year))].sort();
 const visibleMonths=()=>yearFilterOn&&filteredYears.size?data.filter(d=>filteredYears.has(d.year)):data;
 const getM=id=>data.find(d=>d.id===id);
 
 // ══ INIT ════════════════════════════════════════════════════════════════════
 function init(){
-  data=loadData();
+  const raw=loadData();
+  if(typeof raw==='string'&&raw.startsWith('__async__')){
+    const encoded=raw.slice(9);
+    decompressData(encoded).then(decoded=>{
+      const isMinified=decoded[0]&&'i' in decoded[0];
+      data=isMinified?expandData(decoded):decoded;
+      if(!Array.isArray(data)||!data.length)data=JSON.parse(JSON.stringify(INITIAL));
+      sortData();saveData();
+      _initState();
+    }).catch(()=>{
+      data=JSON.parse(JSON.stringify(INITIAL));
+      _initState();
+    });
+  } else {
+    data=Array.isArray(raw)?raw:JSON.parse(JSON.stringify(INITIAL));
+    _initState();
+  }
+}
+function _initState(){
   const ys=years();
-  activeYear=ys.includes('2026')?'2026':ys[ys.length-1];
+  const curYear=String(new Date().getFullYear());
+  activeYear=ys.includes(curYear)?curYear:(ys.includes('2026')?'2026':ys[ys.length-1]);
   activeMonth=data.filter(d=>d.year===activeYear).pop()?.id||data[data.length-1]?.id;
+  // auto-enable year filter for current year
+  yearFilterOn=true;
+  filteredYears=new Set([activeYear]);
   render();
+  // sync toggle UI after render
+  const tog=document.getElementById('yearToggle');
+  if(tog)tog.checked=true;
+  document.getElementById('yearPills').style.display='flex';
 }
 
-// ══ YEAR FILTER ══════════════════════════════════════════════════════════════
+// ══ BANK FILTER ═════════════════════════════════════════════════════════════
+function setBankFilter(bank){
+  bankFilter=bank;
+  ['bfAll','bfItau','bfInter','bfNubank'].forEach(id=>document.getElementById(id)?.classList.remove('on'));
+  const map={'':'bfAll','Itau':'bfItau','Inter':'bfInter','Nubank':'bfNubank'};
+  document.getElementById(map[bank])?.classList.add('on');
+  renderQuinzena();renderKPIs();renderBanks();
+}
+
+// ══ EYE TOGGLE ══════════════════════════════════════════════════════════════
+function toggleValVis(){
+  valVisible=!valVisible;
+  document.getElementById('eyeToggle').textContent=valVisible?'👁':'🙈';
+  document.querySelectorAll('.val-blur').forEach(el=>{
+    el.classList.toggle('val-hidden',!valVisible);
+  });
+}
+function vWrap(val){
+  return`<span class="val-blur${!valVisible?' val-hidden':''}">${val}</span>`;
+}
+
+// ══ PAID CHECK ══════════════════════════════════════════════════════════════
+function togglePaid(monthId,key,i){
+  const m=getM(monthId);
+  if(!m||!m[key][i])return;
+  m[key][i].paid=!m[key][i].paid;
+  saveData();renderQuinzena();renderKPIs();
+}
+
 function toggleYearFilter(on){
   yearFilterOn=on;
   document.getElementById('yearPills').style.display=on?'flex':'none';
@@ -545,13 +625,23 @@ function renderKPIs(){
   const m=getM(activeMonth);
   if(!m){document.getElementById('kpiBar').innerHTML='<div class="empty">Selecione um mês.</div>';return;}
   const r=tRec(m),e=tExp(m),s=saldo(m);
+  // apply bank filter
+  const arr=[...m.d15,...m.d30];
+  const filtered=bankFilter?arr.filter(x=>x.dest===bankFilter):arr;
+  const filtTotal=filtered.reduce((a,b)=>a+b.v,0);
+  const filtPaid=filtered.filter(x=>x.paid).reduce((a,b)=>a+b.v,0);
+  const bankLabel=bankFilter||'Todos';
   document.getElementById('kpiBar').innerHTML=`
-    <div class="kpi"><div class="k-label">Total Receitas</div><div class="k-val c-green">${fmtR(r)}</div><div class="k-sub">${m.label}</div></div>
-    <div class="kpi"><div class="k-label">Total Despesas</div><div class="k-val c-red">${fmtR(e)}</div><div class="k-sub">${pct(e/r)} comprometido</div></div>
-    <div class="kpi"><div class="k-label">Saldo do Mês</div><div class="k-val ${s>=0?'c-green':'c-red'}">${s<0?'− ':''}${fmtR(s)}</div><div class="k-sub">${s>=0?'Positivo ✓':'Negativo ⚠️'}</div></div>
-    <div class="kpi"><div class="k-label">Dia 15 — Gastos</div><div class="k-val c-blue">${fmtR(sumK(m.d15))}</div><div class="k-sub">Saldo: ${fmtR(m.vale-sumK(m.d15))}</div></div>
-    <div class="kpi"><div class="k-label">Dia 30 — Gastos</div><div class="k-val c-yellow">${fmtR(sumK(m.d30))}</div><div class="k-sub">Saldo: ${fmtR(m.pg-sumK(m.d30))}</div></div>
+    <div class="kpi"><div class="k-label">Total Receitas</div><div class="k-val c-green">${vWrap(fmtR(r))}</div><div class="k-sub">${m.label}</div></div>
+    <div class="kpi"><div class="k-label">Total Despesas</div><div class="k-val c-red">${vWrap(fmtR(e))}</div><div class="k-sub">${pct(e/r)} comprometido</div></div>
+    <div class="kpi"><div class="k-label">Saldo do Mês</div><div class="k-val ${s>=0?'c-green':'c-red'}">${vWrap((s<0?'− ':'')+fmtR(s))}</div><div class="k-sub">${s>=0?'Positivo ✓':'Negativo ⚠️'}</div></div>
+    <div class="kpi"><div class="k-label">Dia 15 — Gastos</div><div class="k-val c-blue">${vWrap(fmtR(sumK(m.d15)))}</div><div class="k-sub">Saldo: ${vWrap(fmtR(m.vale-sumK(m.d15)-(m.save15||0)))}${m.save15?` · 🪙 ${vWrap(fmtR(m.save15))}`:''}  </div></div>
+    <div class="kpi"><div class="k-label">Dia 30 — Gastos</div><div class="k-val c-yellow">${vWrap(fmtR(sumK(m.d30)))}</div><div class="k-sub">Saldo: ${vWrap(fmtR(m.pg-sumK(m.d30)-(m.save30||0)))}${m.save30?` · 🪙 ${vWrap(fmtR(m.save30))}`:''}  </div></div>
+    ${bankFilter?`<div class="kpi"><div class="k-label">${bankLabel} — Filtrado</div><div class="k-val" style="color:var(--purple)">${vWrap(fmtR(filtTotal))}</div><div class="k-sub">Pago: ${vWrap(fmtR(filtPaid))}</div></div>`:''}
   `;
+  // update filter total label
+  const ftEl=document.getElementById('bankFilterTotal');
+  if(ftEl) ftEl.textContent=bankFilter?`Total ${bankLabel}: ${fmtR(filtTotal)}`:'';
 }
 
 // Bank totals — active month only
@@ -563,9 +653,9 @@ function renderBanks(){
   const inter=all.filter(e=>e.dest==='Inter').reduce((s,e)=>s+e.v,0);
   const nubank=all.filter(e=>e.dest==='Nubank').reduce((s,e)=>s+e.v,0);
   document.getElementById('bankBar').innerHTML=`
-    <div class="bank-card bank-itau"><div class="bank-label">Itaú</div><div class="bank-val">${fmtR(itau)}</div></div>
-    <div class="bank-card bank-inter"><div class="bank-label">Inter</div><div class="bank-val">${fmtR(inter)}</div></div>
-    <div class="bank-card bank-nubank"><div class="bank-label">Nubank</div><div class="bank-val">${fmtR(nubank)}</div></div>
+    <div class="bank-card bank-itau"><div class="bank-label">Itaú</div><div class="bank-val">${vWrap(fmtR(itau))}</div></div>
+    <div class="bank-card bank-inter"><div class="bank-label">Inter</div><div class="bank-val">${vWrap(fmtR(inter))}</div></div>
+    <div class="bank-card bank-nubank"><div class="bank-label">Nubank</div><div class="bank-val">${vWrap(fmtR(nubank))}</div></div>
   `;
 }
 
@@ -593,7 +683,26 @@ function renderPills(){
   ).join('');
 }
 
-function selectMonth(id){activeMonth=id;renderPills();renderQuinzena();renderTop();renderKPIs();renderBanks();}
+function selectMonth(id){
+  activeMonth=id;
+  renderPills();renderQuinzena();renderTop();renderKPIs();renderBanks();
+  // close the collapse after selecting
+  const body=document.getElementById('monthCollapseBody');
+  const arrow=document.getElementById('monthCollapseArrow');
+  if(body&&body.classList.contains('open')){
+    body.classList.remove('open');
+    arrow&&arrow.classList.remove('open');
+  }
+}
+
+let monthCollapseOpen=false;
+function toggleMonthCollapse(){
+  monthCollapseOpen=!monthCollapseOpen;
+  const body=document.getElementById('monthCollapseBody');
+  const arrow=document.getElementById('monthCollapseArrow');
+  body.classList.toggle('open',monthCollapseOpen);
+  arrow.classList.toggle('open',monthCollapseOpen);
+}
 
 // ══ QUINZENA ══════════════════════════════════════════════════════════════
 function renderQuinzena(){
@@ -608,20 +717,29 @@ function destSelect(id,selected,cls='dest-sel'){
 }
 
 function quinzCard(m,key,cls,title,incLabel,income){
-  const spent=sumK(m[key]);const sld=income-spent;
+  const spent=sumK(m[key]);
+  const saveField=key==='d15'?'save15':'save30';
+  const savedAmt=m[saveField]||0;
+  const sld=income-spent-savedAmt;
+  // apply bank filter: show all rows but dim non-matching when filter active
   const rows=m[key].map((e,i)=>expRow(m.id,key,e,i)).join('')||'<div class="empty">Sem gastos.</div>';
+  // filtered total for display
+  const filtArr=bankFilter?m[key].filter(e=>e.dest===bankFilter):m[key];
+  const filtSpent=filtArr.reduce((a,b)=>a+b.v,0);
+  const filtLabel=bankFilter?`<span style="font-size:.62rem;color:var(--muted);margin-left:6px">(${bankFilter}: ${fmtR(filtSpent)})</span>`:'';
+  const saldoSemGuardar=income-spent;
   return`<div class="q-card">
     <div class="q-header ${cls}">
       <div>
         <span class="q-badge ${cls}">${title}</span>
         <div class="q-income-edit">
           <span style="font-size:.68rem;color:var(--muted)">${incLabel}:</span>
-          <span class="income-val" onclick="editIncome('${m.id}','${key}')">${fmtR(income)}</span>
+          <span class="income-val" onclick="editIncome('${m.id}','${key}')">${vWrap(fmtR(income))}</span>
         </div>
       </div>
       <div style="text-align:right">
-        <div style="font-size:.68rem;color:var(--muted)">Gasto</div>
-        <div style="font-family:var(--mono);font-size:.85rem;color:${cls==='dia15'?'var(--blue)':'var(--accent2)'}">${fmtR(spent)}</div>
+        <div style="font-size:.68rem;color:var(--muted)">Gasto${filtLabel}</div>
+        <div style="font-family:var(--mono);font-size:.85rem;color:${cls==='dia15'?'var(--blue)':'var(--accent2)'}">${vWrap(fmtR(spent))}</div>
       </div>
     </div>
     <div class="expense-list" id="list_${key}_${m.id}">${rows}</div>
@@ -632,11 +750,16 @@ function quinzCard(m,key,cls,title,incLabel,income){
       ${destSelect(`dest_${key}_${m.id}`,'')}
       <button class="add-btn" onclick="addExp('${m.id}','${key}')">+</button>
     </div>
+    <div class="guardar-row">
+      <span class="guardar-label">🪙 Guardar:</span>
+      <span class="guardar-val val-blur${!valVisible?' val-hidden':''}" onclick="editGuardar('${m.id}','${saveField}')">${fmtR(savedAmt)}</span>
+      ${savedAmt>0?`<span class="guardar-badge">restam ${vWrap(fmtR(saldoSemGuardar-savedAmt<0?0:saldoSemGuardar-savedAmt))} livres</span>`:'<span class="guardar-badge" style="font-size:.65rem">clique para definir</span>'}
+    </div>
     <div class="q-footer">
       <button class="btn btn-purple" style="font-size:.7rem;padding:4px 10px" onclick="openCopy('${m.id}','${key}')">📋 Copiar anterior</button>
       <div>
         <span style="font-size:.68rem;color:var(--muted)">Saldo: </span>
-        <span class="q-saldo" style="color:${sld>=0?'var(--accent)':'var(--accent2)'}">${sld<0?'− ':''}${fmtR(sld)}</span>
+        <span class="q-saldo" style="color:${sld>=0?'var(--accent)':'var(--accent2)'}">${sld<0?'− ':''}${vWrap(fmtR(Math.abs(sld)))}</span>
       </div>
     </div>
   </div>`;
@@ -648,13 +771,29 @@ function destBadge(dest){
 }
 
 function expRow(monthId,key,e,i){
-  const pBadge=e.p>0?`<span class="parcela-badge">${e.p}x</span>`:'';
-  return`<div class="exp-row" id="erow_${key}_${monthId}_${i}">
+  // Installments: e.p = total parcelas, e.pPaid = parcelas já pagas (aumenta a cada mês)
+  // Badge mostra "X/Y" onde X=parcela atual e Y=total
+  let pBadge='';
+  if(e.p>0){
+    const pPaid=e.pPaid||0;
+    const current=pPaid+1;
+    const remaining=e.p-pPaid;
+    if(remaining>0){
+      pBadge=`<span class="parcela-badge" title="${current}ª de ${e.p} parcelas — faltam ${remaining}">${current}/${e.p}</span>`;
+    } else {
+      pBadge=`<span class="parcela-badge" style="opacity:.4" title="Parcelamento quitado">✓${e.p}x</span>`;
+    }
+  }
+  const isPaid=!!e.paid;
+  const isFiltered=bankFilter&&e.dest!==bankFilter;
+  const rowStyle=isFiltered?'opacity:.25;':'';
+  return`<div class="exp-row${isPaid?' paid-row':''}" id="erow_${key}_${monthId}_${i}" style="${rowStyle}">
+    <div class="exp-check${isPaid?' paid':''}" onclick="togglePaid('${monthId}','${key}',${i})" title="${isPaid?'Marcar como não pago':'Marcar como pago'}"></div>
     <div class="exp-name-wrap">
       <span class="exp-name" ondblclick="startEdit('${monthId}','${key}',${i})">${e.n}</span>
       ${pBadge}${destBadge(e.dest||'')}
     </div>
-    <span class="exp-amount" ondblclick="startEdit('${monthId}','${key}',${i})">${fmtR(e.v)}</span>
+    <span class="exp-amount val-blur${!valVisible?' val-hidden':''}" ondblclick="startEdit('${monthId}','${key}',${i})">${fmtR(e.v)}</span>
     <div class="row-actions">
       <button class="icon-btn edit-icon" onclick="startEdit('${monthId}','${key}',${i})" title="Editar">✏️</button>
       <button class="icon-btn del-btn" onclick="delExp('${monthId}','${key}',${i})" title="Remover">✕</button>
@@ -708,6 +847,27 @@ function saveIncome(monthId,key){
   const v=parseFloat(inp.value);if(isNaN(v)||v<0){renderQuinzena();return;}
   const old=m[field];m[field]=v;saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();
   toast(`✅ Salário atualizado`,()=>{m[field]=old;saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();});
+}
+
+// ══ GUARDAR DINHEIRO ══════════════════════════════════════════════════════
+function editGuardar(monthId,saveField){
+  const m=getM(monthId);
+  const cur=m[saveField]||0;
+  const quinzena=saveField==='save15'?'d15':'d30';
+  const span=event.target;
+  span.outerHTML=`<input class="guardar-input" id="guardInp_${saveField}" type="number" value="${cur}" step="0.01" min="0" placeholder="0.00"
+    onblur="saveGuardar('${monthId}','${saveField}')"
+    onkeydown="if(event.key==='Enter')saveGuardar('${monthId}','${saveField}');if(event.key==='Escape')renderQuinzena();">`;
+  document.getElementById(`guardInp_${saveField}`).focus();
+}
+function saveGuardar(monthId,saveField){
+  const m=getM(monthId);
+  const inp=document.getElementById(`guardInp_${saveField}`);if(!inp)return;
+  const v=parseFloat(inp.value)||0;if(v<0){renderQuinzena();return;}
+  const old=m[saveField]||0;
+  m[saveField]=v;
+  saveData();renderQuinzena();renderKPIs();
+  toast(`🪙 Guardar ${fmtR(v)} salvo!`,()=>{m[saveField]=old;saveData();renderQuinzena();renderKPIs();});
 }
 
 // ══ ADD / DELETE EXP ═══════════════════════════════════════════════════════
@@ -809,11 +969,19 @@ function openCopy(monthId,key){
   const idx=data.findIndex(d=>d.id===monthId);
   const prev=data[idx-1];if(!prev){toast('⚠️ Não há mês anterior!');return;}
   document.getElementById('copySourceLabel').textContent=`De: ${prev.label} → ${getM(monthId).label} (${key==='d15'?'Dia 15':'Dia 30'})`;
+  function parInfo(e){
+    if(e.p<=0)return'';
+    const pPaid=e.pPaid||0;
+    const next=pPaid+1;
+    const rem=e.p-pPaid;
+    if(rem<=1)return' <span style="color:var(--accent3);font-size:.65rem">(última parcela)</span>';
+    return` <span style="color:var(--purple);font-size:.65rem">(${next}/${e.p} — faltam ${rem-1} após)</span>`;
+  }
   document.getElementById('copyList').innerHTML=`
     <div class="copy-section">Dia 15 — ${prev.label}</div>
-    ${prev.d15.map((e,i)=>`<div class="copy-item"><input type="checkbox" id="cp_d15_${i}" checked><label for="cp_d15_${i}">${e.n}${e.p>0?' ('+e.p+'x)':''}${e.dest?' ['+e.dest+']':''}</label><span class="copy-amt">${fmtR(e.v)}</span></div>`).join('')}
+    ${prev.d15.map((e,i)=>`<div class="copy-item"><input type="checkbox" id="cp_d15_${i}" checked><label for="cp_d15_${i}">${e.n}${parInfo(e)}${e.dest?' ['+e.dest+']':''}</label><span class="copy-amt">${fmtR(e.v)}</span></div>`).join('')}
     <div class="copy-section">Dia 30 — ${prev.label}</div>
-    ${prev.d30.map((e,i)=>`<div class="copy-item"><input type="checkbox" id="cp_d30_${i}" checked><label for="cp_d30_${i}">${e.n}${e.p>0?' ('+e.p+'x)':''}${e.dest?' ['+e.dest+']':''}</label><span class="copy-amt">${fmtR(e.v)}</span></div>`).join('')}
+    ${prev.d30.map((e,i)=>`<div class="copy-item"><input type="checkbox" id="cp_d30_${i}" checked><label for="cp_d30_${i}">${e.n}${parInfo(e)}${e.dest?' ['+e.dest+']':''}</label><span class="copy-amt">${fmtR(e.v)}</span></div>`).join('')}
   `;
   document.getElementById('modalCopy').classList.add('open');
 }
@@ -822,18 +990,99 @@ function confirmCopy(){
   const idx=data.findIndex(d=>d.id===copyTarget.monthId);
   const prev=data[idx-1];if(!prev)return;
   const m=getM(copyTarget.monthId);const snap=JSON.parse(JSON.stringify(m));let count=0;
-  prev.d15.forEach((e,i)=>{if(document.getElementById(`cp_d15_${i}`)?.checked){m[copyTarget.key].push({...e});count++;}});
-  prev.d30.forEach((e,i)=>{if(document.getElementById(`cp_d30_${i}`)?.checked){m[copyTarget.key].push({...e});count++;}});
+  prev.d15.forEach((e,i)=>{
+    if(document.getElementById(`cp_d15_${i}`)?.checked){
+      const copy={...e};
+      // advance installment: if has parcelas and not finished
+      if(copy.p>0){
+        copy.pPaid=(copy.pPaid||0)+1;
+        // if fully paid, skip copying
+        if(copy.pPaid>=copy.p){copy.p=0;copy.pPaid=0;}
+      }
+      copy.paid=false; // reset paid status for new month
+      m[copyTarget.key].push(copy);count++;
+    }
+  });
+  prev.d30.forEach((e,i)=>{
+    if(document.getElementById(`cp_d30_${i}`)?.checked){
+      const copy={...e};
+      if(copy.p>0){
+        copy.pPaid=(copy.pPaid||0)+1;
+        if(copy.pPaid>=copy.p){copy.p=0;copy.pPaid=0;}
+      }
+      copy.paid=false;
+      m[copyTarget.key].push(copy);count++;
+    }
+  });
   saveData();closeModal('modalCopy');renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();
   toast(`✅ ${count} item(s) copiado(s)`,()=>{Object.assign(m,snap);saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();});
 }
 
 // ══ SHARE ═══════════════════════════════════════════════════════════════════
+// Minify/expand data keys to reduce payload size
+function minifyData(d){
+  // month: {id,label,year,vale,pg,extra,d15:[],d30:[]}
+  // item:  {n,v,p,pPaid,dest,paid}
+  // minified month keys: i=id,l=label,y=year,a=vale,b=pg,e=extra,f=d15,g=d30
+  // minified item keys:  n=n,v=v,p=p,q=pPaid,d=dest,k=paid
+  return d.map(m=>({
+    i:m.id,l:m.label,y:m.year,
+    a:m.vale,b:m.pg,
+    ...(m.extra?{e:m.extra}:{}),...(m.save15?{s1:m.save15}:{}),...(m.save30?{s3:m.save30}:{}),
+    f:m.d15.map(x=>({n:x.n,v:x.v,...(x.p?{p:x.p}:{}),...(x.pPaid?{q:x.pPaid}:{}),...(x.dest?{d:x.dest}:{}),...(x.paid?{k:1}:{})})),
+    g:m.d30.map(x=>({n:x.n,v:x.v,...(x.p?{p:x.p}:{}),...(x.pPaid?{q:x.pPaid}:{}),...(x.dest?{d:x.dest}:{}),...(x.paid?{k:1}:{})}))
+  }));
+}
+function expandData(d){
+  return d.map(m=>({
+    id:m.i,label:m.l,year:m.y,
+    vale:m.a,pg:m.b,extra:m.e||0,save15:m.s1||0,save30:m.s3||0,
+    d15:(m.f||[]).map(x=>({n:x.n,v:x.v,p:x.p||0,pPaid:x.q||0,dest:x.d||'',paid:!!x.k})),
+    d30:(m.g||[]).map(x=>({n:x.n,v:x.v,p:x.p||0,pPaid:x.q||0,dest:x.d||'',paid:!!x.k}))
+  }));
+}
+
+// LZ-based compression using built-in CompressionStream (modern browsers)
+// Fallback: just minify + btoa
+async function compressData(obj){
+  const json=JSON.stringify(minifyData(obj));
+  try{
+    const stream=new Blob([json]).stream().pipeThrough(new CompressionStream('deflate-raw'));
+    const buf=await new Response(stream).arrayBuffer();
+    const bytes=new Uint8Array(buf);
+    let bin='';for(let b of bytes)bin+=String.fromCharCode(b);
+    return'z'+btoa(bin);
+  }catch(e){
+    return'b'+btoa(unescape(encodeURIComponent(json)));
+  }
+}
+async function decompressData(str){
+  if(str.startsWith('z')){
+    const bin=atob(str.slice(1));
+    const bytes=new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+    const stream=new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+    const text=await new Response(stream).text();
+    return JSON.parse(text);
+  } else if(str.startsWith('b')){
+    return JSON.parse(decodeURIComponent(escape(atob(str.slice(1)))));
+  } else {
+    // legacy plain btoa
+    return JSON.parse(atob(str));
+  }
+}
+
 function openShare(){
-  const encoded=btoa(JSON.stringify(data));
-  const url=`${location.origin}${location.pathname}#data=${encoded}`;
-  document.getElementById('shareUrl').textContent=url;
-  document.getElementById('modalShare').classList.add('open');
+  compressData(data).then(encoded=>{
+    const url=`${location.origin}${location.pathname}#data=${encoded}`;
+    const orig=btoa(JSON.stringify(data)).length;
+    const comp=encoded.length;
+    const saved=Math.round((1-comp/orig)*100);
+    document.getElementById('shareUrl').textContent=url;
+    document.getElementById('shareSizeInfo').textContent=
+      `Tamanho: ${(comp/1024).toFixed(1)} KB  •  ${saved}% menor que antes`;
+    document.getElementById('modalShare').classList.add('open');
+  });
 }
 function copyShareLink(){
   const url=document.getElementById('shareUrl').textContent;
@@ -844,17 +1093,19 @@ function copyShareLink(){
 function openShareLink(){window.open(document.getElementById('shareUrl').textContent,'_blank');}
 function importFromUrl(){
   const raw=document.getElementById('importUrl').value.trim();
-  try{
-    const hash=raw.includes('#data=')?raw.split('#data=')[1]:raw;
-    const decoded=JSON.parse(atob(hash));
+  const hash=raw.includes('#data=')?raw.split('#data=')[1]:raw;
+  decompressData(hash).then(decoded=>{
     if(!Array.isArray(decoded)||!decoded.length)throw new Error();
+    // detect if it's minified (has 'i' key) or full
+    const isMinified=decoded[0]&&'i' in decoded[0];
+    const full=isMinified?expandData(decoded):decoded;
     const snap=JSON.parse(JSON.stringify(data));
-    data=decoded;sortData();saveData();
+    data=full;sortData();saveData();
     activeYear=years()[years().length-1];
     activeMonth=data.filter(d=>d.year===activeYear).pop()?.id||data[data.length-1].id;
     closeModal('modalShare');render();
     toast('✅ Dados importados!',()=>{data=snap;sortData();saveData();render();});
-  }catch(e){toast('⚠️ Link inválido ou corrompido.');}
+  }).catch(()=>toast('⚠️ Link inválido ou corrompido.'));
 }
 
 // ══ MODAL + TOAST ═══════════════════════════════════════════════════════════
