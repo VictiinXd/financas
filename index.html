@@ -259,6 +259,46 @@ tr:hover td{background:var(--raised)}
 .toast .undo-btn{font-family:var(--mono);font-size:.72rem;color:var(--accent3);cursor:pointer;border:1px solid var(--accent3);border-radius:5px;padding:2px 7px;flex-shrink:0;background:none}
 .toast .undo-btn:hover{background:rgba(255,209,102,.1)}
 .empty{text-align:center;padding:20px;color:var(--muted);font-size:.78rem}
+
+/* ── PAID FILTER BAR ── */
+.paid-filter-bar{display:flex;align-items:center;gap:6px;padding:6px 14px 0;flex-wrap:wrap}
+.pf-pill{font-size:.68rem;padding:3px 10px;border:1px solid var(--border);border-radius:20px;cursor:pointer;background:var(--raised);transition:all .2s}
+.pf-pill.on{font-weight:700}
+.pf-pill.pf-all.on{background:var(--accent);color:#0a0e1a;border-color:var(--accent)}
+.pf-pill.pf-paid.on{background:rgba(0,212,170,.15);color:var(--accent);border-color:var(--accent)}
+.pf-pill.pf-pend.on{background:rgba(255,107,107,.15);color:var(--accent2);border-color:var(--accent2)}
+/* ── RECURRING BADGE ── */
+.rec-badge{font-size:.58rem;background:rgba(255,209,102,.08);color:var(--muted);border:1px solid rgba(255,209,102,.2);border-radius:10px;padding:1px 5px;flex-shrink:0;cursor:pointer;transition:all .15s}
+.rec-badge:hover,.rec-badge.on{background:rgba(255,209,102,.2);color:var(--accent3);border-color:rgba(255,209,102,.4)}
+/* ── HISTORY MODAL ── */
+.hist-list{max-height:380px;overflow-y:auto;margin-top:10px}
+.hist-entry{padding:8px 12px;border-bottom:1px solid var(--border);font-size:.78rem}
+.hist-entry:last-child{border-bottom:none}
+.hist-time{font-size:.65rem;color:var(--muted);font-family:var(--mono)}
+.hist-action{margin-top:2px;line-height:1.4}
+.hist-tag{display:inline-block;font-size:.62rem;padding:1px 6px;border-radius:8px;margin-right:4px;font-weight:600}
+.hist-add{background:rgba(0,212,170,.15);color:var(--accent)}
+.hist-del{background:rgba(255,107,107,.15);color:var(--accent2)}
+.hist-edit{background:rgba(79,158,255,.15);color:var(--blue)}
+.hist-inc{background:rgba(167,139,250,.15);color:var(--purple)}
+.hist-clear{font-size:.72rem;color:var(--accent2);cursor:pointer;border:none;background:none;padding:0;float:right}
+.hist-clear:hover{text-decoration:underline}
+/* ── SALDO NEGATIVO ALERT ── */
+.q-alert{display:flex;align-items:center;gap:6px;padding:6px 14px;background:rgba(255,107,107,.08);border-top:1px solid rgba(255,107,107,.2);font-size:.72rem;color:var(--accent2)}
+/* ── KEYBOARD SHORTCUTS ── */
+.kbd-hint{font-size:.62rem;color:var(--muted);background:var(--raised);border:1px solid var(--border);border-radius:5px;padding:1px 5px;font-family:var(--mono)}
+
+/* ── BULK DELETE ── */
+.bulk-del-list{max-height:360px;overflow-y:auto;margin-top:10px;border:1px solid var(--border);border-radius:10px}
+.bulk-del-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .15s}
+.bulk-del-item:last-child{border-bottom:none}
+.bulk-del-item:hover{background:var(--raised)}
+.bulk-del-item input[type=checkbox]{accent-color:var(--accent2);width:15px;height:15px;cursor:pointer;flex-shrink:0}
+.bulk-del-item label{cursor:pointer;flex:1;font-size:.82rem}
+.bulk-del-item .bdel-saldo{font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+.bulk-del-year{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);padding:7px 12px 3px;font-weight:600;background:var(--card)}
+.bulk-del-sel-all{display:flex;gap:8px;margin-bottom:8px;flex-wrap:wrap;align-items:center}
+.bulk-del-count{font-size:.75rem;color:var(--accent2);font-family:var(--mono);margin-left:auto}
 @media(max-width:600px){header{padding:12px 14px}.container{padding:14px 10px}.bank-bar{grid-template-columns:1fr}}
 </style>
 </head>
@@ -289,7 +329,10 @@ tr:hover td{background:var(--raised)}
     <div><h1>Controle Financeiro</h1><p>Dia 15 · Dia 30 · Quinzenas</p></div>
   </div>
   <div class="header-actions">
+    <button class="btn" onclick="openHistory()" title="Histórico de edições">📜 Histórico</button>
+    <button class="btn btn-warn" onclick="openExportImport()">💾 Backup</button>
     <button class="btn btn-blue" onclick="openShare()">🔗 Compartilhar</button>
+    <button class="btn" onclick="document.getElementById('modalShortcuts').classList.add('open')" title="Atalhos de teclado (Alt+?)">⌨️</button>
     <button class="btn" onclick="logout()" title="Sair" style="padding:7px 10px">🔒</button>
   </div>
 </header>
@@ -348,6 +391,7 @@ tr:hover td{background:var(--raised)}
       <div class="month-collapse-actions">
         <button class="btn btn-accent" onclick="openNewMonth()">+ Novo Mês</button>
         <button class="btn btn-danger" onclick="confirmDeleteMonth()" style="font-size:.72rem;padding:5px 11px">🗑 Excluir mês</button>
+        <button class="btn btn-danger" onclick="openBulkDelete()" style="font-size:.72rem;padding:5px 11px">🗑 Excluir em massa</button>
       </div>
     </div>
   </div>
@@ -443,6 +487,103 @@ tr:hover td{background:var(--raised)}
   </div>
 </div>
 
+
+<!-- History -->
+<div class="overlay" id="modalHistory">
+  <div class="modal" style="max-width:540px">
+    <h3>📜 Histórico de Edições <button class="hist-clear" onclick="clearHistory()">Limpar tudo</button></h3>
+    <div class="hist-list" id="histList"></div>
+    <div class="modal-actions" style="margin-top:14px">
+      <button class="btn" onclick="closeModal('modalHistory')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export / Import -->
+<div class="overlay" id="modalExportImport">
+  <div class="modal" style="max-width:480px">
+    <h3>💾 Backup — Exportar / Importar</h3>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px">
+      <div style="background:var(--raised);border:1px solid var(--border);border-radius:10px;padding:14px">
+        <div style="font-size:.78rem;font-weight:600;margin-bottom:8px">📤 Exportar dados</div>
+        <p style="font-size:.72rem;color:var(--muted);margin-bottom:10px">Baixe um arquivo de backup com todos os seus dados financeiros.</p>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-accent" style="flex:1" onclick="exportJSON()">⬇️ Exportar JSON</button>
+          <button class="btn btn-blue" style="flex:1" onclick="exportCSV()">⬇️ Exportar CSV</button>
+        </div>
+      </div>
+      <div style="background:var(--raised);border:1px solid var(--border);border-radius:10px;padding:14px">
+        <div style="font-size:.78rem;font-weight:600;margin-bottom:8px">📥 Importar dados</div>
+        <p style="font-size:.72rem;color:var(--muted);margin-bottom:10px">Selecione um arquivo JSON exportado anteriormente. <strong style="color:var(--accent2)">Os dados atuais serão substituídos.</strong></p>
+        <label style="display:flex;align-items:center;gap:8px;cursor:pointer;background:var(--card);border:1px dashed var(--border);border-radius:8px;padding:12px;transition:border-color .2s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">
+          <span style="font-size:1.2rem">📂</span>
+          <span style="font-size:.78rem;color:var(--muted)">Clique para selecionar arquivo JSON…</span>
+          <input type="file" accept=".json" id="importFileInput" style="display:none" onchange="importJSON(this)">
+        </label>
+      </div>
+    </div>
+    <div class="modal-actions" style="margin-top:16px">
+      <button class="btn" onclick="closeModal('modalExportImport')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Keyboard Shortcuts Help -->
+<div class="overlay" id="modalShortcuts">
+  <div class="modal" style="max-width:380px">
+    <h3>⌨️ Atalhos de Teclado</h3>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:4px;font-size:.8rem">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>Focar campo Nome (Dia 15)</span><span class="kbd-hint">Alt+1</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>Focar campo Nome (Dia 30)</span><span class="kbd-hint">Alt+3</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>Confirmar adição (dentro do campo)</span><span class="kbd-hint">Enter</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>Navegar entre campos</span><span class="kbd-hint">Tab</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>Abrir/fechar lista de meses</span><span class="kbd-hint">Alt+M</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>Mês anterior</span><span class="kbd-hint">Alt+←</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)">
+        <span>Próximo mês</span><span class="kbd-hint">Alt+→</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0">
+        <span>Esta ajuda</span><span class="kbd-hint">Alt+?</span>
+      </div>
+    </div>
+    <div class="modal-actions" style="margin-top:16px">
+      <button class="btn btn-accent" onclick="closeModal('modalShortcuts')">Fechar</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- Bulk Delete Months -->
+<div class="overlay" id="modalBulkDel">
+  <div class="modal" style="max-width:480px">
+    <h3>🗑️ Excluir Meses em Massa</h3>
+    <div class="bulk-del-sel-all">
+      <button class="btn btn-blue" style="font-size:.72rem;padding:4px 10px" onclick="bulkDelSelectAll(true)">Selecionar tudo</button>
+      <button class="btn" style="font-size:.72rem;padding:4px 10px" onclick="bulkDelSelectAll(false)">Desmarcar tudo</button>
+      <button class="btn" style="font-size:.72rem;padding:4px 10px" onclick="bulkDelSelectYear()">Selecionar ano ativo</button>
+      <span class="bulk-del-count" id="bulkDelCount">0 selecionados</span>
+    </div>
+    <div class="bulk-del-list" id="bulkDelList"></div>
+    <p style="font-size:.72rem;color:var(--accent2);margin-top:12px;line-height:1.5">⚠️ Esta ação é irreversível. Os meses selecionados serão permanentemente excluídos.</p>
+    <div class="modal-actions" style="margin-top:14px">
+      <button class="btn" onclick="closeModal('modalBulkDel')">Cancelar</button>
+      <button class="btn btn-danger" id="bulkDelConfirmBtn" onclick="confirmBulkDelete()" disabled style="opacity:.4">🗑️ Excluir Selecionados</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast-stack" id="toastStack"></div>
 
 <script>
@@ -498,6 +639,9 @@ let yearFilterOn=false, filteredYears=new Set();
 let barChart, lineChart;
 let bankFilter=''; // '', 'Itau', 'Inter', 'Nubank'
 let valVisible=true;
+let paidFilter={}; // {monthId_key: 'all'|'paid'|'pend'}
+let editHistory=[]; // [{ts, action, detail}]
+const MAX_HIST=200;
 
 function loadData(){
   try{
@@ -511,7 +655,18 @@ function loadData(){
   try{const s=localStorage.getItem('findata_v4');if(s)return JSON.parse(s);}catch(e){}
   return JSON.parse(JSON.stringify(INITIAL));
 }
-function saveData(){try{localStorage.setItem('findata_v4',JSON.stringify(data));}catch(e){}}
+function saveData(){
+  try{localStorage.setItem('findata_v4',JSON.stringify(data));}catch(e){}
+  try{localStorage.setItem('findata_hist',JSON.stringify(editHistory.slice(-MAX_HIST)));}catch(e){}
+}
+function loadHistory(){
+  try{const h=localStorage.getItem('findata_hist');if(h)editHistory=JSON.parse(h);}catch(e){}
+}
+function addHist(action,detail){
+  const ts=new Date().toLocaleString('pt-BR',{day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit'});
+  editHistory.unshift({ts,action,detail});
+  if(editHistory.length>MAX_HIST)editHistory.length=MAX_HIST;
+}
 
 const fmtR=v=>'R$ '+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2});
 const pct=v=>(v*100).toFixed(1)+'%';
@@ -551,6 +706,7 @@ function _initState(){
   // auto-enable year filter for current year
   yearFilterOn=true;
   filteredYears=new Set([activeYear]);
+  loadHistory();
   render();
   // sync toggle UI after render
   const tog=document.getElementById('yearToggle');
@@ -722,7 +878,16 @@ function quinzCard(m,key,cls,title,incLabel,income){
   const savedAmt=m[saveField]||0;
   const sld=income-spent-savedAmt;
   // apply bank filter: show all rows but dim non-matching when filter active
-  const rows=m[key].map((e,i)=>expRow(m.id,key,e,i)).join('')||'<div class="empty">Sem gastos.</div>';
+  const pf=paidFilter[`${m.id}_${key}`]||'all';
+  const filteredRows=m[key].filter((e,i)=>{
+    if(pf==='paid')return e.paid;
+    if(pf==='pend')return !e.paid;
+    return true;
+  });
+  const rows=filteredRows.map((e)=>{
+    const origI=m[key].indexOf(e);
+    return expRow(m.id,key,e,origI);
+  }).join('')||'<div class="empty">Sem gastos.</div>';
   // filtered total for display
   const filtArr=bankFilter?m[key].filter(e=>e.dest===bankFilter):m[key];
   const filtSpent=filtArr.reduce((a,b)=>a+b.v,0);
@@ -742,6 +907,14 @@ function quinzCard(m,key,cls,title,incLabel,income){
         <div style="font-family:var(--mono);font-size:.85rem;color:${cls==='dia15'?'var(--blue)':'var(--accent2)'}">${vWrap(fmtR(spent))}</div>
       </div>
     </div>
+    <div class="paid-filter-bar">
+      <span style="font-size:.68rem;color:var(--muted)">Ver:</span>
+      <div class="pf-pill pf-all on" id="pf_all_${key}_${m.id}" onclick="setPaidFilter('${m.id}','${key}','all')">Todos</div>
+      <div class="pf-pill pf-paid" id="pf_paid_${key}_${m.id}" onclick="setPaidFilter('${m.id}','${key}','paid')">✓ Pagos</div>
+      <div class="pf-pill pf-pend" id="pf_pend_${key}_${m.id}" onclick="setPaidFilter('${m.id}','${key}','pend')">⏳ Pendentes</div>
+      <span style="font-size:.62rem;color:var(--muted);margin-left:4px">(${m[key].filter(e=>!e.paid).length} pend.)</span>
+    </div>
+    ${sld<0?`<div class="q-alert">⚠️ Saldo negativo: ${fmtR(Math.abs(sld))} a descoberto nesta quinzena!</div>`:''}
     <div class="expense-list" id="list_${key}_${m.id}">${rows}</div>
     <div class="add-row">
       <input type="text" id="name_${key}_${m.id}" placeholder="Nome…" onkeydown="if(event.key==='Enter')addExp('${m.id}','${key}')">
@@ -792,6 +965,7 @@ function expRow(monthId,key,e,i){
     <div class="exp-name-wrap">
       <span class="exp-name" ondblclick="startEdit('${monthId}','${key}',${i})">${e.n}</span>
       ${pBadge}${destBadge(e.dest||'')}
+      <span class="rec-badge${e.rec?' on':''}" onclick="toggleRec('${monthId}','${key}',${i})" title="${e.rec?'Recorrente — clique para desmarcar':'Marcar como recorrente'}">${e.rec?'🔁 fixo':'🔁'}</span>
     </div>
     <span class="exp-amount val-blur${!valVisible?' val-hidden':''}" ondblclick="startEdit('${monthId}','${key}',${i})">${fmtR(e.v)}</span>
     <div class="row-actions">
@@ -828,7 +1002,8 @@ function saveEdit(monthId,key,i){
   const dest=document.getElementById(`ei_d_${i}`).value;
   if(!n||isNaN(v)||v<0){toast('⚠️ Dados inválidos!');return;}
   const old={...m[key][i]};
-  m[key][i]={n,v,p,dest};
+  m[key][i]={n,v,p,dest,rec:old.rec||false};
+  addHist('edit',`${m.label} — ${n}: ${fmtR(old.v)} → ${fmtR(v)}`);
   saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();
   toast(`✅ ${n} atualizado`,()=>{m[key][i]=old;saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();});
 }
@@ -845,7 +1020,9 @@ function saveIncome(monthId,key){
   const m=getM(monthId);const field=key==='d15'?'vale':'pg';
   const inp=document.getElementById(`incInp_${key}`);if(!inp)return;
   const v=parseFloat(inp.value);if(isNaN(v)||v<0){renderQuinzena();return;}
-  const old=m[field];m[field]=v;saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();
+  const old=m[field];m[field]=v;
+  addHist('inc',`${m.label} — ${field==='vale'?'Salário VALE':'Salário PG'}: ${fmtR(old)} → ${fmtR(v)}`);
+  saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();
   toast(`✅ Salário atualizado`,()=>{m[field]=old;saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();});
 }
 
@@ -881,6 +1058,7 @@ function addExp(monthId,key){
   if(!name||isNaN(val)||val<=0){toast('⚠️ Preencha nome e valor!');return;}
   const m=getM(monthId);const item={n:name,v:val,p:par,dest};
   m[key].push(item);
+  addHist('add',`${m.label} — ${key==='d15'?'Dia 15':'Dia 30'}: ${name} (${fmtR(val)})`);
   saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();
   ni.value='';vi.value='';pi.value='';di.value='';
   toast(`✅ ${name} adicionado`,()=>{m[key].splice(m[key].length-1,1);saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();});
@@ -888,6 +1066,7 @@ function addExp(monthId,key){
 }
 function delExp(monthId,key,i){
   const m=getM(monthId);const removed=m[key].splice(i,1)[0];
+  addHist('del',`${m.label} — ${key==='d15'?'Dia 15':'Dia 30'}: ${removed.n} (${fmtR(removed.v)})`);
   saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();
   toast(`🗑️ ${removed.n} removido`,()=>{m[key].splice(i,0,removed);saveData();renderQuinzena();renderKPIs();renderBanks();renderCharts();renderTable();renderTop();});
 }
@@ -937,9 +1116,19 @@ function addMonth(){
   const id=`${mname}-${y}`;
   const label=`${mname.charAt(0)+mname.slice(1).toLowerCase()}/${y}`;
   if(data.find(d=>d.id===id)){toast('⚠️ Mês já existe!');return;}
-  data.push({id,label,year:y,vale,pg,extra,d15:[],d30:[]});
+  // auto-copy recurring items from last month
+  let autoD15=[], autoD30=[];
+  if(data.length>0){
+    const lastM=data[data.length-1];
+    autoD15=lastM.d15.filter(e=>e.rec).map(e=>({...e,paid:false,pPaid:(e.p>0?((e.pPaid||0)+1):0)})).filter(e=>!(e.p>0&&e.pPaid>=e.p));
+    autoD30=lastM.d30.filter(e=>e.rec).map(e=>({...e,paid:false,pPaid:(e.p>0?((e.pPaid||0)+1):0)})).filter(e=>!(e.p>0&&e.pPaid>=e.p));
+  }
+  data.push({id,label,year:y,vale,pg,extra,d15:autoD15,d30:autoD30});
   sortData();saveData();activeYear=y;activeMonth=id;
-  closeModal('modalNewMonth');render();toast(`✅ ${label} criado!`);
+  addHist('inc',`Mês criado: ${label}${autoD15.length+autoD30.length>0?` — ${autoD15.length+autoD30.length} recorrentes copiados`:''}`);
+  saveData();
+  closeModal('modalNewMonth');render();
+  toast(`✅ ${label} criado!${autoD15.length+autoD30.length>0?` (${autoD15.length+autoD30.length} recorrentes adicionados)`:''}`);
 }
 function sortData(){
   const order=['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
@@ -1029,16 +1218,16 @@ function minifyData(d){
     i:m.id,l:m.label,y:m.year,
     a:m.vale,b:m.pg,
     ...(m.extra?{e:m.extra}:{}),...(m.save15?{s1:m.save15}:{}),...(m.save30?{s3:m.save30}:{}),
-    f:m.d15.map(x=>({n:x.n,v:x.v,...(x.p?{p:x.p}:{}),...(x.pPaid?{q:x.pPaid}:{}),...(x.dest?{d:x.dest}:{}),...(x.paid?{k:1}:{})})),
-    g:m.d30.map(x=>({n:x.n,v:x.v,...(x.p?{p:x.p}:{}),...(x.pPaid?{q:x.pPaid}:{}),...(x.dest?{d:x.dest}:{}),...(x.paid?{k:1}:{})}))
+    f:m.d15.map(x=>({n:x.n,v:x.v,...(x.p?{p:x.p}:{}),...(x.pPaid?{q:x.pPaid}:{}),...(x.dest?{d:x.dest}:{}),...(x.paid?{k:1}:{}),...(x.rec?{r:1}:{})})),
+    g:m.d30.map(x=>({n:x.n,v:x.v,...(x.p?{p:x.p}:{}),...(x.pPaid?{q:x.pPaid}:{}),...(x.dest?{d:x.dest}:{}),...(x.paid?{k:1}:{}),...(x.rec?{r:1}:{})}))
   }));
 }
 function expandData(d){
   return d.map(m=>({
     id:m.i,label:m.l,year:m.y,
     vale:m.a,pg:m.b,extra:m.e||0,save15:m.s1||0,save30:m.s3||0,
-    d15:(m.f||[]).map(x=>({n:x.n,v:x.v,p:x.p||0,pPaid:x.q||0,dest:x.d||'',paid:!!x.k})),
-    d30:(m.g||[]).map(x=>({n:x.n,v:x.v,p:x.p||0,pPaid:x.q||0,dest:x.d||'',paid:!!x.k}))
+    d15:(m.f||[]).map(x=>({n:x.n,v:x.v,p:x.p||0,pPaid:x.q||0,dest:x.d||'',paid:!!x.k,rec:!!x.r})),
+    d30:(m.g||[]).map(x=>({n:x.n,v:x.v,p:x.p||0,pPaid:x.q||0,dest:x.d||'',paid:!!x.k,rec:!!x.r}))
   }));
 }
 
@@ -1122,6 +1311,209 @@ function toast(msg,undoFn=null,duration=4000){
   setTimeout(()=>{t.classList.remove('show');setTimeout(()=>t.remove(),350);},duration);
 }
 
+
+// ══ PAID FILTER ════════════════════════════════════════════════════════════
+function setPaidFilter(monthId,key,val){
+  paidFilter[`${monthId}_${key}`]=val;
+  // update pill styles
+  ['all','paid','pend'].forEach(v=>{
+    const el=document.getElementById(`pf_${v}_${key}_${monthId}`);
+    if(el)el.classList.toggle('on',v===val);
+  });
+  renderQuinzena();
+}
+
+// ══ RECURRING TOGGLE ═══════════════════════════════════════════════════════
+function toggleRec(monthId,key,i){
+  const m=getM(monthId);if(!m||!m[key][i])return;
+  m[key][i].rec=!m[key][i].rec;
+  addHist('edit',`${m.label} — ${m[key][i].n}: ${m[key][i].rec?'marcado como recorrente':'removido recorrente'}`);
+  saveData();renderQuinzena();
+  toast(m[key][i].rec?`🔁 ${m[key][i].n} marcado como fixo`:`${m[key][i].n} não é mais fixo`);
+}
+
+// ══ HISTORY ════════════════════════════════════════════════════════════════
+function openHistory(){
+  const list=document.getElementById('histList');
+  if(editHistory.length===0){
+    list.innerHTML='<div class="empty">Nenhuma edição registrada ainda.</div>';
+  } else {
+    const tagMap={add:'hist-add',del:'hist-del',edit:'hist-edit',inc:'hist-inc'};
+    const labelMap={add:'Adicionado',del:'Removido',edit:'Editado',inc:'Receita/Mês'};
+    list.innerHTML=editHistory.map(h=>`
+      <div class="hist-entry">
+        <div class="hist-time">${h.ts}</div>
+        <div class="hist-action">
+          <span class="hist-tag ${tagMap[h.action]||'hist-edit'}">${labelMap[h.action]||h.action}</span>
+          ${h.detail}
+        </div>
+      </div>
+    `).join('');
+  }
+  document.getElementById('modalHistory').classList.add('open');
+}
+function clearHistory(){
+  editHistory=[];
+  try{localStorage.removeItem('findata_hist');}catch(e){}
+  openHistory();
+  toast('🗑️ Histórico limpo');
+}
+
+// ══ EXPORT / IMPORT ════════════════════════════════════════════════════════
+function openExportImport(){
+  document.getElementById('modalExportImport').classList.add('open');
+}
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  const d=new Date();
+  a.download=`fincontrol_backup_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.json`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('✅ JSON exportado!');
+}
+function exportCSV(){
+  const rows=[['Mês','Quinzena','Nome','Valor','Parcelas','Banco','Pago','Recorrente']];
+  data.forEach(m=>{
+    m.d15.forEach(e=>rows.push([m.label,'Dia 15',e.n,e.v.toFixed(2),e.p||0,e.dest||'',e.paid?'Sim':'Não',e.rec?'Sim':'Não']));
+    m.d30.forEach(e=>rows.push([m.label,'Dia 30',e.n,e.v.toFixed(2),e.p||0,e.dest||'',e.paid?'Sim':'Não',e.rec?'Sim':'Não']));
+  });
+  const csv=rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\n');
+  const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  const d=new Date();
+  a.download=`fincontrol_${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}.csv`;
+  a.click();URL.revokeObjectURL(a.href);
+  toast('✅ CSV exportado!');
+}
+function importJSON(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const parsed=JSON.parse(e.target.result);
+      if(!Array.isArray(parsed)||!parsed.length)throw new Error();
+      // detect minified
+      const isMin=parsed[0]&&'i' in parsed[0];
+      const full=isMin?expandData(parsed):parsed;
+      const snap=JSON.parse(JSON.stringify(data));
+      data=full;sortData();saveData();
+      activeYear=years()[years().length-1];
+      activeMonth=data.filter(d=>d.year===activeYear).pop()?.id||data[data.length-1].id;
+      addHist('inc',`Dados importados de arquivo: ${file.name}`);
+      saveData();
+      closeModal('modalExportImport');render();
+      toast('✅ Dados importados!',()=>{data=snap;sortData();saveData();render();});
+    }catch(err){toast('⚠️ Arquivo inválido ou corrompido.');}
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+
+// ══ KEYBOARD SHORTCUTS ═════════════════════════════════════════════════════
+document.addEventListener('keydown',e=>{
+  // Don't fire if user is typing in an input
+  const tag=document.activeElement?.tagName;
+  const inInput=tag==='INPUT'||tag==='TEXTAREA'||tag==='SELECT';
+  if(e.altKey){
+    if(e.key==='1'||e.key==='!'){
+      e.preventDefault();
+      const el=document.getElementById(`name_d15_${activeMonth}`);
+      if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'});}
+    } else if(e.key==='3'||e.key==='#'){
+      e.preventDefault();
+      const el=document.getElementById(`name_d30_${activeMonth}`);
+      if(el){el.focus();el.scrollIntoView({behavior:'smooth',block:'center'});}
+    } else if(e.key==='m'||e.key==='M'){
+      e.preventDefault();toggleMonthCollapse();
+    } else if(e.key==='ArrowLeft'){
+      e.preventDefault();
+      const vm=visibleMonths();const idx=vm.findIndex(m=>m.id===activeMonth);
+      if(idx>0)selectMonth(vm[idx-1].id);
+    } else if(e.key==='ArrowRight'){
+      e.preventDefault();
+      const vm=visibleMonths();const idx=vm.findIndex(m=>m.id===activeMonth);
+      if(idx<vm.length-1)selectMonth(vm[idx+1].id);
+    } else if(e.key==='?'||e.key===('/')){{
+      e.preventDefault();
+      document.getElementById('modalShortcuts').classList.add('open');
+    }}
+  }
+  if(e.key==='Escape'&&!inInput){
+    document.querySelectorAll('.overlay.open').forEach(o=>o.classList.remove('open'));
+  }
+});
+
+
+// ══ BULK DELETE MONTHS ═════════════════════════════════════════════════════
+function openBulkDelete(){
+  renderBulkDelList();
+  document.getElementById('modalBulkDel').classList.add('open');
+}
+function renderBulkDelList(){
+  const list=document.getElementById('bulkDelList');
+  const byYear={};
+  data.forEach(m=>{(byYear[m.year]=byYear[m.year]||[]).push(m);});
+  let html='';
+  Object.keys(byYear).sort().forEach(y=>{
+    html+=`<div class="bulk-del-year">📅 ${y}</div>`;
+    byYear[y].forEach(m=>{
+      const s=saldo(m);
+      html+=`<div class="bulk-del-item" onclick="toggleBulkDelItem('${m.id}')">
+        <input type="checkbox" id="bdel_${m.id}" value="${m.id}" onchange="updateBulkDelCount()">
+        <label for="bdel_${m.id}">${m.label}</label>
+        <span class="bdel-saldo" style="color:${s>=0?'var(--accent)':'var(--accent2)'}">${s>=0?'+':''}${fmtR(s)}</span>
+      </div>`;
+    });
+  });
+  list.innerHTML=html;
+  updateBulkDelCount();
+}
+function toggleBulkDelItem(id){
+  const cb=document.getElementById(`bdel_${id}`);
+  if(cb)cb.checked=!cb.checked;
+  updateBulkDelCount();
+}
+function bulkDelSelectAll(val){
+  document.querySelectorAll('#bulkDelList input[type=checkbox]').forEach(c=>c.checked=val);
+  updateBulkDelCount();
+}
+function bulkDelSelectYear(){
+  document.querySelectorAll('#bulkDelList input[type=checkbox]').forEach(c=>c.checked=false);
+  data.filter(m=>m.year===activeYear).forEach(m=>{
+    const cb=document.getElementById(`bdel_${m.id}`);
+    if(cb)cb.checked=true;
+  });
+  updateBulkDelCount();
+}
+function updateBulkDelCount(){
+  const checked=document.querySelectorAll('#bulkDelList input[type=checkbox]:checked').length;
+  const countEl=document.getElementById('bulkDelCount');
+  const btn=document.getElementById('bulkDelConfirmBtn');
+  if(countEl)countEl.textContent=`${checked} selecionado${checked!==1?'s':''}`;
+  if(btn){btn.disabled=checked===0;btn.style.opacity=checked===0?'.4':'1';}
+}
+function confirmBulkDelete(){
+  const ids=[...document.querySelectorAll('#bulkDelList input[type=checkbox]:checked')].map(c=>c.value);
+  if(!ids.length)return;
+  const snap=JSON.parse(JSON.stringify(data));
+  const labels=ids.map(id=>getM(id)?.label).filter(Boolean).join(', ');
+  data=data.filter(m=>!ids.includes(m.id));
+  saveData();
+  // adjust activeMonth if it was deleted
+  if(ids.includes(activeMonth)){
+    const vm=visibleMonths();
+    activeMonth=vm.length?vm[vm.length-1].id:data[data.length-1]?.id||'';
+  }
+  addHist('del',`Excluídos em massa: ${labels}`);
+  saveData();
+  closeModal('modalBulkDel');
+  render();
+  toast(`🗑️ ${ids.length} mês(es) excluído(s)`,()=>{
+    data=snap;sortData();saveData();render();
+  });
+}
 // auto-load if already authenticated
 if(sessionStorage.getItem('fin_auth')==='1')init();
 </script>
