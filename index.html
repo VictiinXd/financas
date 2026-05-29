@@ -1103,6 +1103,12 @@ function openNewMonth(){
   document.getElementById('modalNewMonth').classList.add('open');
   const now=new Date();
   document.getElementById('newMonthInput').value=`${now.getFullYear()}-${String(now.getMonth()+2).padStart(2,'0')}`;
+  // pre-fill with last month's salaries
+  if(data.length>0){
+    const lastM=data[data.length-1];
+    document.getElementById('newVale').value=lastM.vale||'';
+    document.getElementById('newPg').value=lastM.pg||'';
+  }
 }
 function addMonth(){
   const raw=document.getElementById('newMonthInput').value;
