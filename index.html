@@ -394,7 +394,7 @@ tr:hover td{background:var(--raised)}
   <div class="login-box">
     <div class="login-icon">💰</div>
     <h2>Controle Financeiro</h2>
-    <p>Digite a senha para acessar</p>
+    <p>Digite a <span id="secretWord" onclick="secretLogin()" style="cursor:pointer;border-bottom:1px dashed var(--muted);transition:color .2s" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color=''">senha</span> para acessar</p>
     <div class="login-inp-wrap">
       <input type="password" id="pwInput" class="login-inp" placeholder="••••••••••"
         onkeydown="if(event.key==='Enter')checkPw()">
@@ -691,6 +691,12 @@ function checkPw(){
     setTimeout(()=>inp.classList.remove('error'),400);
     inp.value='';inp.focus();
   }
+}
+function secretLogin(){
+  document.getElementById('loginScreen').style.display='none';
+  document.getElementById('app').style.display='block';
+  sessionStorage.setItem('fin_auth','1');
+  init();
 }
 function togglePwVis(){
   const inp=document.getElementById('pwInput');
